@@ -28,6 +28,7 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Pango
 
+from Links import color_parser
 from BaseThought import *
 from TextThought import TextThought
 
@@ -159,9 +160,9 @@ class LabelThought (TextThought):
         self.identity = int (node.getAttribute ("identity"))
         try:
             tmp = node.getAttribute ("background-color")
-            self.background_color = Gdk.Color.parse(tmp)
+            self.background_color = color_parser(tmp)
             tmp = node.getAttribute ("foreground-color")
-            self.foreground_color = Gdk.Color.parse(tmp)
+            self.foreground_color = color_parser(tmp)
         except ValueError:
             pass
 

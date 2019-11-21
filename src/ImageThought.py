@@ -34,6 +34,7 @@ from gi.repository import GdkPixbuf
 
 from sugar3 import mime
 
+from Links import color_parser
 from BaseThought import *
 import utils
 import UndoManager
@@ -209,7 +210,7 @@ class ImageThought (ResizableThought):
         self.identity = int (node.getAttribute ("identity"))
         try:
             tmp = node.getAttribute ("background-color")
-            self.background_color = Gdk.Color.parse(tmp)
+            self.background_color = color_parser(tmp)
 
         except ValueError:
             pass

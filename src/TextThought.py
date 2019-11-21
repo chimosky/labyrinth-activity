@@ -34,6 +34,7 @@ import xml.dom
 import utils
 import BaseThought
 import UndoManager
+from Links import color_parser
 from BaseThought import *
 import prefs
 
@@ -605,8 +606,8 @@ class TextThought (ResizableThought):
         """
 
         r, g, b = utils.gtk_to_cairo_color(self.foreground_color)
-        rgba = Gdk.Color(int(65535 * r), int(65535 * g), int(65535 * b))
-        self.textview.modify_text(Gtk.StateType.NORMAL, rgba)
+        rgba = Gdk.RGBA(int(65535 * r), int(65535 * g), int(65535 * b))
+        self.textview.modify_text(Gtk.StateType.NORMAL, rgba.to_color())
 
         self.textview.get_buffer().set_text(self.text)
         self.textview.show()
@@ -885,9 +886,9 @@ class TextThought (ResizableThought):
         self.identity = 0 ##int (node.getAttribute ("identity"))
         try:
             tmp = node.getAttribute ("background-color")
-            self.background_color = Gdk.Color.parse(tmp)
+            self.background_color = color_parser(tmp)
             tmp = node.getAttribute ("foreground-color")
-            self.foreground_color = Gdk.Color.parse(tmp)
+            self.foreground_color = color_parser(tmp)
         except ValueError:
             pass
 

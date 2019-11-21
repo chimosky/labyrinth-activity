@@ -33,6 +33,12 @@ def norm(x, y):
     mod = math.sqrt(abs((x[0]**2 - y[0]**2) + (x[1]**2 - y[1]**2)))
     return [abs(x[0]-y[0]) / (mod), abs(x[1] - y[1]) / (mod)]
 
+def color_parser(color):
+    rgba = Gdk.RGBA()
+    rgba.parse(color)
+    return rgba
+
+
 class Link (GObject.GObject):
     __gsignals__ = dict (select_link         = (GObject.SIGNAL_RUN_FIRST,
                                                 GObject.TYPE_NONE,
@@ -52,7 +58,7 @@ class Link (GObject.GObject):
         self.strength = strength
         self.element = save.createElement ("link")
         self.selected = False
-        self.color = utils.gtk_to_cairo_color(Gdk.Color.parse("black"))
+        self.color = utils.gtk_to_cairo_color(color_parser("black"))
         self.model_iter = None
         self.text = None
 
@@ -133,13 +139,13 @@ class Link (GObject.GObject):
             x3 = self.end[0] - dx / 2.0
             context.curve_to(x2, self.start[1], x3, self.end[1], self.end[0], self.end[1])
         else:
-            context.line_to (self.end[0], self.end[1])
+            context.line_to(self.end[0], self.end[1])
 
         if self.selected:
             color = utils.selected_colors["bg"]
-            context.set_source_rgb (color[0], color[1], color[2])
+            context.set_source_rgb(color[0], color[1], color[2])
         else:
-            context.set_source_rgb (self.color[0], self.color[1], self.color[2])
+            context.set_source_rgb(self.color[0], self.color[1], self.color[2])
         context.stroke ()
         context.set_line_width (cwidth)
         context.set_source_rgb (0.0, 0.0, 0.0)

@@ -383,7 +383,7 @@ class TextAttributesToolbar(Gtk.Toolbar):
         bakground_color = ColorToolButton()
         bakground_color.set_title(_('Set background color'))
         bakground_color.connect('color-set', self.__background_color_cb)
-        bakground_color.set_color(Gdk.Color(65535, 65535, 65535))
+        bakground_color.set_color(Gdk.RGBA(65535, 65535, 65535))
         self.insert(bakground_color, -1)
 
         self.show_all()
